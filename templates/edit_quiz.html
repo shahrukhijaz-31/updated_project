@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Edit Quiz</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.jqueryui.min.css">
+      <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+      <!-- Latest compiled JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <style>
+         .jumbotron{
+         background-color: #238bdc;
+         color:black;
+         }
+         .modal-header{
+         background-color: #238bdc;
+         color: white;
+         }
+         .modal-footer{
+         background-color: #238bdc;
+         color: white;
+         }
+         .btn-Default{
+         color: black;
+         border: 1px solid black;
+         }
+      </style>
+   </head>
+   <body class="container">
+      <h1 class="jumbotron text-center"> Questions </h1>
+      <form action="/logout" method="POST">
+         <input type="submit" value="logout" class="btn btn-danger" style="float: right;">
+         <div class="btn-group">
+            <a href = "/create_quiz" class="btn btn-info"> Create Quiz</a>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_question_modal">Add Question</button>
+         </div>
+      </form>
+      <br><br>
+      <table class="display" id="questions">
+         <thead>
+            <tr>
+               <th>ID</th>
+               <th>Statement</th>
+               <th>Option A</th>
+               <th>Option B</th>
+               <th>Option C</th>
+               <th>Option D</th>
+               <th>Correct Answer</th>
+               <th>Option</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% for question in questions %}
+            <tr>
+               <td>{{ question.id }}</td>
+               <td>{{ question.statement }}</td>
+               <td>{{ question.options[0]['option_a'] }}</td>
+               <td>{{ question.options[1]['option_b'] }}</td>
+               <td>{{ question.options[2]['option_c'] }}</td>
+               <td>{{ question.options[3]['option_d'] }}</td>
+               <td>{{ question.correct_ans }}</td>
+               <td>
+                  <input type="hidden" value="{{ question.id }}" name="q_id" id="q_id"/>
+                  <a href="/delete_question/{{ question.id }}" class="label label-warning">Delete</a>
+                  <a class="edit label label-primary">Edit</a>
+               </td>
+            </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+      </div>
+      </div>
+      <form>
+         <div class="modal fade" id="add_question_modal" role="dialog">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     <h4 class="modal-title">Add Question</h4>
+                  </div>
+                  <div class="modal-body">
+                     <div class="input-group" >
+                        <span class="input-group-addon">Question Statement </span>
+                        <input type="text" class="form-control" name="statement" id="statement"  placeholder="Enter Question...">
+                     </div>
+                     <br>
+                     <div class="input-group" >
+                        <span class="input-group-addon">Option A</span>
+                        <input type="text" class="form-control" name="option_1" id="option_1">
+                        <span class="input-group-addon">Option B</span>
+                        <input type="text" class="form-control" name="option_2" id="option_2">
+                     </div>
+                     <br>
+                     <div class="input-group" >
+                        <span class="input-group-addon">Option C</span>
+                        <input type="text" class="form-control" name="option_3" id="option_3">
+                        <span class="input-group-addon">Option D</span>
+                        <input type="text" class="form-control" name="option_4" id="option_4">
+                     </div>
+                     <br>
+                     <select name="correct_answer" id="correct_answer" name="correct_answer">
+                        <option >A</option>
+                        <option >B</option>
+                        <option >C</option>
+                        <option >D</option>
+                     </select>
+                  </div>
+                  <div class="modal-footer">
+                     <input type="submit" class="btn btn-Default save" value="Add"/>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+      <form action="/update_question" method="POST">
+         <input type="hidden" name="question_id" id="question_id" />
+         <!-- Modal -->
+         <div class="modal fade" id="edit_question_modal" role="dialog">
+            <div class="modal-dialog">
+               <!-- Modal content-->
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     <h4 class="modal-title">Edit Question</h4>
+                  </div>
+                  <div class="modal-body">
+                     <div class="input-group" >
+                        <span class="input-group-addon">Question Statement </span>
+                        <input type="text" class="form-control" name="question_statement" id="question_statement"  placeholder="Enter Question...">
+                     </div>
+                     <br>
+                     <div class="input-group" >
+                        <span class="input-group-addon">Option A</span>
+                        <input type="text" class="form-control" name="option_a" id="option_a">
+                        <span class="input-group-addon">Option B</span>
+                        <input type="text" class="form-control" name="option_b" id="option_b">
+                     </div>
+                     <br>
+                     <div class="input-group" >
+                        <span class="input-group-addon">Option C</span>
+                        <input type="text" class="form-control" name="option_c" id="option_c">
+                        <span class="input-group-addon">Option D</span>
+                        <input type="text" class="form-control" name="option_d" id="option_d">
+                     </div>
+                     <br>
+                     <div class="input-group" >
+                        <span class="input-group-addon">Correct Ans</span>
+                        <input type="text" readonly="readonly" class="form-control" name="ans" id="ans"  >
+                     </div>
+                     <br>
+                     <select class="correct_ans" name="correct_ans" id="correct_ans">
+                        <option >A</option>
+                        <option >B</option>
+                        <option >C</option>
+                        <option >D</option>
+                     </select>
+                  </div>
+                  <div class="modal-footer">
+                     <input type="submit" class="btn btn-Default" value="Save"/>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+   </body>
+   <script>
+      $(document).ready( function () {
+      $('#questions').DataTable();
+      } );
+   </script>
+   <script>
+      $(function() {
+      $('.edit').click(function() {
+          var question_id = $(this).parentsUntil("tr").children("input").val();
+          $.ajax({
+              url: '/edit_question',
+              type: 'POST',
+              data: {'question_id': question_id},
+              success: function(response) {
+                  question_body = JSON.parse(response);
+                  $("#question_statement").val(question_body.statement);
+                  $("#option_a").val(question_body.option_a);
+                  $("#option_a").val(question_body.option_a);
+                  $("#option_a").val(question_body.option_a);
+                  $("#option_b").val(question_body.option_b);
+                  $("#option_c").val(question_body.option_c);
+                  $("#option_d").val(question_body.option_d);
+                  $('#ans').prop('readonly',false);
+                  $("#ans").val(question_body.correct_ans);
+                  $('#ans').prop('readonly',true);
+                  $("#question_id").val(question_body.id);
+                  $('#edit_question_modal').modal('show');
+                  console.log(response);
+              },
+              error: function(error) {
+                  alert("Error");
+                  console.log(error);
+              }
+          });
+      });
+      });
+   </script>
+   <script>
+      $( ".correct_ans" ).change(function() {
+         $("#ans").val($(".correct_ans").val());
+      });
+   </script>
+<script>
+      $(function() {
+      $('.save').click(function() {
+          var statement = $( "input[name='statement']" ).val();
+          var option_a = $( "input[name='option_1']" ).val();
+          var option_b = $( "input[name='option_2']" ).val();
+          var option_c = $( "input[name='option_3']" ).val();
+          var option_d = $( "input[name='option_4']" ).val();
+          var correct_answer = $("#correct_answer").val();
+          var question_body ={
+              'statement': statement,
+              'option_a': option_a,
+              'option_b': option_b,
+              'option_c': option_c,
+              'option_d': option_d,
+              'correct_answer': correct_answer
+          };
+          $.ajax({
+              url: '/add_question',
+              type: 'POST',
+              data: {'question_body': question_body},
+              success: function(response) {
+                    alert(response);
+              },
+              error: function(error) {
+                  alert("Error");
+                  console.log(error);
+              }
+          });
+      });
+      });
+   </script>
+
+</html>

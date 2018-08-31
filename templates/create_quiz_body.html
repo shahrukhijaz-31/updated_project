@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <title>Quiz Panel</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .input-group-addon{
+            background-color: #238bdc;
+            color:black;
+        }
+        .jumbotron{
+            background-color: #238bdc;
+            color:black;
+        }
+    </style>
+</head>
+<body class="container" style="background-color: aliceblue;">
+<h2 class="jumbotron text-center">
+    <b>Quiz Name: </b>{{ quiz_detail.quiz_name }}<br>
+    <b>Teacher Name: </b>{{ session["username"] }}<br>
+</h2>
+<form action="/logout" method="POST" >
+     <input type="submit" value="logout" class="btn btn-danger" style="float: right;">
+     <div class="btn-group">
+         <a href = "/quiz_management" class="btn btn-primary">Quiz Management</a>
+     </div>
+</form>
+
+
+<form action="/save_quiz" method="POST">
+    <input type="hidden" name="question_number" value="{{ quiz_detail.question_number }}"/>
+    <input type="hidden" name="quiz_name" value="{{ quiz_detail.quiz_name }}"/>
+    <input type="hidden" name="teacher_name" value="{{ session['username'] }}"/>
+
+   {%  for question  in range(1, quiz_detail.question_number) %}
+        <div class="input-group" >
+            <span class="input-group-addon">Question no {{ questioni }}</span>
+            <input type="text" class="form-control" name="question{{ question }}"  placeholder="Enter Question...">
+        </div><br>
+         <div class="input-group" >
+            <span class="input-group-addon">A</span>
+            <input type="text" class="form-control" name="option_a{{ question }}" placeholder="Enter Option A">
+            <span class="input-group-addon">B</span>
+            <input type="text" class="form-control" name="option_b{{ question }}" placeholder="Enter Option B">
+            <span class="input-group-addon">C</span>
+            <input type="text" class="form-control" name="option_c{{ question }}" placeholder="Enter Option C">
+            <span class="input-group-addon">D</span>
+            <input type="text" class="form-control" name="option_d{{ question }}" placeholder="Enter Option D">
+        </div><br>
+        <div class="input-group" >
+            <span class="input-group-addon" >Correct Answer:</span>
+            <select name="correct_ans{{ question }}">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+            </select>
+        </div><br>
+        <hr style="border: 1px solid #238bdc;"/>
+    {% endfor %}
+    <input type="submit" class="btn btn-success" value="Save Quiz" >
+<br><br><br>
+</form>
+
+
+</body>
+</html>

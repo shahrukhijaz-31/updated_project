@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Question</title>
+</head>
+<body>
+
+<form>
+    <div class="input-group" >
+        <span class="input-group-addon">Question Statement </span>
+        <input type="text" class="form-control" name="question_statement"  placeholder="Enter Question...">
+    </div><br>
+    <div class="input-group" >
+        <span class="input-group-addon">Option A</span>
+        <input type="text" class="form-control" name="option_a" value="{{ question.option_a }}"  >
+        <span class="input-group-addon">Option B</span>
+        <input type="text" class="form-control" name="option_b" value="{{ question.option_b }}"  >
+        <span class="input-group-addon">Option C</span>
+        <input type="text" class="form-control" name="option_c" value="{{ question.option_c }}"  >
+        <span class="input-group-addon">Option D</span>
+        <input type="text" class="form-control" name="option_d" value="{{ question.option_d }}"  >
+    </div><br>
+    <div class="input-group" >
+        <span class="input-group-addon">Correct Ans</span>
+        <input type="text" disabled="disabled" class="form-control" name="old_correct_ans" value="{{ question.correct_ans }}" >
+    </div><br>
+    <select name="correct_ans">
+        <option value="{{ question.option_a }}">A</option>
+        <option value="{{ question.option_b }}">B</option>
+        <option value="{{ question.option_c }}">C</option>
+        <option value="{{ question.option_d }}">D</option>
+    </select>
+    <input type="submit" class="btn btn-info" value="Save"/>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Panel</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.jqueryui.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .jumbotron{
+            background-color: #238bdc;
+            color:black;
+        }
+    </style>
+</head>
+<body class="container">
+<h1 class="jumbotron text-center" style="background-color: #052f50;color:white;">Student Panel</h1>
+    <form action="/logout" method="POST" >
+        <div class="btn-group">
+            <input type="submit" value="logout" class="btn btn-danger" style="float:right;">
+        </div>
+    </form>
+    <br><br>
+    <table class="display" id="quiz_table">
+         <thead>
+            <tr>
+               <th>Quiz Id</th>
+               <th>Quiz Name</th>
+               <th>Options</th>
+            </tr>
+         </thead>
+
+         <tbody>
+            {% for quiz in quizes %}
+               <tr>
+                  <td>{{ quiz.id }}</td>
+                  <td>{{ quiz.name }}</td>
+                  <td><a href='/start_quiz/{{quiz.id}}/{{ session['username'] }}' class="btn btn-success">Attempt Quiz</a></td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+
+</body>
+<script>
+    $(document).ready( function () {
+    $('#quiz_table').DataTable();
+} );
+</script>
+</html>

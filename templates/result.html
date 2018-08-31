@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Result</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.jqueryui.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   </head>
+   <body class="container">
+      <h2 class="text-center" style="color:green;">Your Marks are : {{ result.score }}</h2>
+      <table class="cell-border" id="review">
+         <thead>
+            <tr>
+               <th>ID</th>
+               <th>Statement</th>
+               <th>Correct Answer</th>
+               <th>Your Answer</th>
+               <th>Score</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% set id = 1 %}
+            {% for question in result['solution'] %}
+            <tr>
+               <td>{{loop.index}}</td>
+               <td>{{ question["question_statement"] }}</td>
+               <td>{{ question["correct_ans"] }}</td>
+               {% if question["correct_ans"] != question["selected_ans"] %}
+               <td style="color:red;">{{ question["selected_ans"] }}</td>
+               <td>0</td>
+               {% endif %}
+               {% if question["correct_ans"] == question["selected_ans"] %}
+               <td style="color:green;">{{ question["selected_ans"] }}</td>
+               <td>+1</td>
+               {% endif %}
+               </td>
+            </tr>
+            {% endfor %}
+         </tbody>
+      </table><br>
+   <a href="/save_marks/{{ result.username }}/{{ result.score }}/{{ result.quiz_id }}" class="btn btn-success" style="float:right;">Finish Review</a>
+   </body>
+   <script>
+      $(document).ready( function () {
+         $('#review').DataTable({
+             "bPaginate": false
+         });
+
+      });
+   </script>
+</html>
+

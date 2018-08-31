@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <title>Teacher Panel</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body class="container" >
+    <h1 class="jumbotron text-center" style="background-color: #052f50;color:white;">Teacher Panel</h1>
+    <form action="/logout" method="POST" >
+         <input type="submit" value="logout" class="btn btn-danger" style="float: right;">
+        <div class="btn-group">
+            <a href = "/create_quiz" class="btn btn-info"> Create Quiz</a>
+            <a href = "/quiz_management" class="btn btn-primary">Quiz Management</a>
+        </div>
+    </form>
+
+</body>
+</html>

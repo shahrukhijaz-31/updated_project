@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.jqueryui.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .jumbotron{
+            background-color: #238bdc;
+            color:black;
+        }
+    </style>
+</head>
+<body class="container">
+
+  <h2 class="jumbotron text-center">Data Enrollement Panel</h2>
+  <form action="/logout" method="POST" style="float: right;">
+          <input type="submit" value="logout" class="btn btn-danger">
+  </form><br>
+    <ul class="nav nav-pills">
+        <li class="active"><a data-toggle="pill" href="#teacher">Teacher</a></li>
+        <li><a data-toggle="pill" href="#student">Student</a></li>
+    </ul>
+  <div class="tab-content">
+    <div id="teacher" class="tab-pane fade in active">
+      <h3>Teacher</h3>
+       <form action="/insert_teacher" method="POST">
+           <div class="input-group" >
+               <span class="input-group-addon">Teacher Name </span>
+               <input type="text" class="form-control" name="teacher_name" id="teacher_name"  placeholder="Enter Name...">
+            </div><br>
+           <div class="input-group" >
+               <span class="input-group-addon">Teacher Password</span>
+               <input type="password" class="form-control" name="teacher_password" id="teacher_password"  placeholder="Enter Password...">
+            </div><br>
+           <input type="submit" class="btn btn-primary" value="Register Teacher"/>
+       </form>
+        <br>
+        <table class="display" id="teachers">
+             <thead>
+                <tr>
+                   <th>ID</th>
+                   <th>Name</th>
+                   <th>Password</th>
+                </tr>
+             </thead>
+             <tbody>
+                {% for teacher in user_data["teachers"] %}
+                   <tr>
+                      <td>{{ teacher.id }}</td>
+                      <td>{{ teacher.username }}</td>
+                      <td>{{ teacher.password }}</td>
+                      </td>
+                   </tr>
+                {% endfor %}
+             </tbody>
+      </table>
+    </div>
+    <div id="student" class="tab-pane fade">
+      <h3>Student</h3>
+         <form action="/insert_student" method="POST">
+           <div class="input-group" >
+               <span class="input-group-addon">Student Name </span>
+               <input type="text" class="form-control" name="student_name" id="student_name"  placeholder="Enter Name...">
+            </div><br>
+           <div class="input-group" >
+               <span class="input-group-addon">Student Password</span>
+               <input type="password" class="form-control" name="student_password" id="student_password"  placeholder="Enter Password...">
+            </div><br>
+           <input type="submit" class="btn btn-primary" value="Register Student"/>
+       </form>
+        <br>
+        <table class="display" id="students">
+             <thead>
+                <tr>
+                   <th>ID</th>
+                   <th>Name</th>
+                   <th>Password</th>
+                </tr>
+             </thead>
+             <tbody>
+                {% for student in user_data["students"] %}
+                   <tr>
+                      <td>{{ student.id }}</td>
+                      <td>{{ student.username }}</td>
+                      <td>{{ student.password }}</td>
+                      </td>
+                   </tr>
+                {% endfor %}
+             </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+<script>
+    $(document).ready( function () {
+        $('#teachers').DataTable();
+    });
+</script>
+<script>
+    $(document).ready( function () {
+        $('#students').DataTable();
+    });
+</script>
+</html>

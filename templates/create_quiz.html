@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <title>Quiz Panel</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body class="container" >
+    <h1 class="jumbotron text-center" style="background-color: #052f50;color:white;">Quiz Panel</h1>
+    <form action="/logout" method="POST" >
+        <input type="submit" value="logout" class="btn btn-danger" style="float: right;">
+        <div class="btn-group">
+            <a href = "/quiz_management" class="btn btn-primary">Quiz Management</a>
+        </div>
+    </form><br><br>
+    <form action="/create_quiz_body" method="POST" >
+        <div class="input-group" >
+             <span class="input-group-addon">Quiz Name</span>
+             <input type="text" class="form-control" name="quiz_name" placeholder="Enter Quiz name..." required="required">
+        </div><br>
+        <div class="input-group" >
+             <span class="input-group-addon">Teacher Name</span>
+             <input type="text" class="form-control" name="teacher_name" required="required" value="{{session["username"]}}" disabled="disabled">
+        </div><br>
+        <div class="input-group" >
+             <span class="input-group-addon">Number Of Questions</span>
+             <input type="numeber" class="form-control" required="required" name="question_number">
+        </div><br>
+        <input type="submit" class="btn btn-primary" value="Next">
+    </form>
+
+</body>
+</html>

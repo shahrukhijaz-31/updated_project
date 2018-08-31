@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.jqueryui.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .input-group-addon{
+            background-color: #922b21;
+            color:white;
+            font-size: 15px;
+        }
+        .btn-default{
+            background-color: #922b21;
+            color:white;
+        }
+    </style>
+</head>
+<body class="container">
+<h1 class="text-center">Quiz</h1>
+    <form action="/logout" method="POST" style="float: right;">
+        <div class="btn-group">
+            <input type="submit" value="logout" class="btn btn-danger">
+        </div>
+    </form>
+    <br><br>
+    <form action="/submit_quiz" method="POST">
+        {% for quiz in quiz_data["questions"] %}
+            <div class="row">
+                <div class="col-md-12" >
+                    <div class="input-group" >
+                        <span class="input-group-addon">Question # {{ count }}</span>
+                        <input readonly="readonly" type="text" class="form-control" name="question_statement"  value="{{ quiz.statement  }}">
+                    </div><br>
+                </div>
+            </div>
+             <div class="row">
+                <div class="col-md-3" >
+                    <label class="radio-inline">
+                        <input type="radio" name="option{{ quiz.id }}" required="required" value="{{ quiz.option_a }}">{{ quiz.option_a }}
+                    </label>
+                </div>
+               <div class="col-md-3" >
+                    <label class="radio-inline">
+                        <input type="radio" name="option{{ quiz.id }}" required="required" value="{{ quiz.option_b }}">{{ quiz.option_b }}
+                    </label>
+                </div>
+                <div class="col-md-3" >
+                    <label class="radio-inline">
+                        <input type="radio" name="option{{ quiz.id }}" required="required" value="{{ quiz.option_c }}">{{ quiz.option_c }}
+                    </label>
+                </div>
+                <div class="col-md-3" >
+                    <label class="radio-inline">
+                        <input type="radio" name="option{{ quiz.id }}" required="required" value="{{ quiz.option_d }}">{{ quiz.option_d }}
+                    </label>
+                </div>
+             </div>
+             <br>
+        {% endfor %}
+        <input type="hidden" value="{{ quiz_data["student_username"] }}" name="username"/>
+        <input type="hidden" readonly="readonly" name="quiz_id" id="quiz_id" value="{{ quiz_data["questions"][0].quiz_id }}"/>
+        <input type="submit" value="Finish" class="btn btn-lg btn-default" style="float:right;"/>
+    </form>
+</body>
+<script>
+    $(document).ready( function () {
+    $('#quiz_table').DataTable();
+} );
+</script>
+</html>
